@@ -17,21 +17,21 @@ API reference -- In Progress
 		In Progress -- Table of Differences between numpy.array_api and numpy
 	
 	In Progress -- Constants
-		In Progress -- Inf
-		In Progress -- Infinity
-		In Progress -- NAN
-		In Progress -- NINF
-		In Progress -- NZERO
-		In Progress -- NaN
-		In Progress -- PINF
-		In Progress -- PZERO
-		In Progress -- e
-		In Progress -- euler_gamma
-		In Progress -- inf
-		In Progress -- infty
-		In Progress -- nan
-		In Progress -- newaxis
-		In Progress -- pi
+		NA -- Inf
+		NA -- Infinity
+		NA -- NAN
+		NA -- NINF
+		NA -- NZERO
+		NA -- NaN
+		NA -- PINF
+		NA -- PZERO
+		NA -- e
+		NA -- euler_gamma
+		NA -- inf
+		NA -- infty
+		NA -- nan
+		NA -- newaxis
+		NA -- pi
 
 	Done -- Universal functions (ufunc)
 		Done -- ufunc
