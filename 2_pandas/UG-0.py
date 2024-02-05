@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-
+#10 minutes to pandas
 
 #--------Object creation
 #creating series
