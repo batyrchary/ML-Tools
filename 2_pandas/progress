@@ -1,0 +1,118 @@
+Done -- User Guide
+
+API reference -- In Progress
+
+	In Progress -- Array objects
+		In Progress -- The N-dimensional array (ndarray)
+		In Progress -- Scalars
+		In Progress -- Data type objects (dtype)
+		In Progress -- Indexing routines
+		In Progress -- Iterating over arrays
+		In Progress -- Standard array subclasses
+		In Progress -- Masked arrays
+		In Progress -- The array interface protocol
+		In Progress -- Datetimes and Timedeltas
+
+	In Progress -- Array API Standard Compatibility
+		In Progress -- Table of Differences between numpy.array_api and numpy
+	
+	In Progress -- Constants
+		NA -- Inf
+		NA -- Infinity
+		NA -- NAN
+		NA -- NINF
+		NA -- NZERO
+		NA -- NaN
+		NA -- PINF
+		NA -- PZERO
+		NA -- e
+		NA -- euler_gamma
+		NA -- inf
+		NA -- infty
+		NA -- nan
+		NA -- newaxis
+		NA -- pi
+
+	Done -- Universal functions (ufunc)
+		Done -- ufunc
+		Done -- Available ufuncs
+
+	In Progress -- Routines
+		In Progress -- Array creation routines
+		In Progress -- Array manipulation routines
+		In Progress -- Binary operations
+		In Progress -- String operations
+		In Progress -- C-Types foreign function interface (numpy.ctypeslib)
+		In Progress -- Datetime support functions
+		In Progress -- Data type routines
+		In Progress -- Mathematical functions with automatic domain
+		In Progress -- Floating point error handling
+		In Progress -- Discrete Fourier Transform (numpy.fft)
+		In Progress -- Functional programming
+		In Progress -- NumPy-specific help functions
+		In Progress -- Input and output
+		In Progress -- Linear algebra (numpy.linalg)
+		In Progress -- Logic functions
+		In Progress -- Masked array operations
+		In Progress -- Mathematical functions
+		In Progress -- Matrix library (numpy.matlib)
+		In Progress -- Miscellaneous routines
+		In Progress -- Padding Arrays
+		In Progress -- Polynomials
+		In Progress -- Random sampling (numpy.random)
+		In Progress -- Set routines
+		In Progress -- Sorting, searching, and counting
+		In Progress -- Statistics
+		In Progress -- Test Support (numpy.testing)
+		In Progress -- Support for testing overrides (numpy.testing.overrides)
+		In Progress -- Window functions
+
+	NA -- Typing (numpy.typing)
+		NA -- Mypy plugin
+		NA -- Differences from the runtime NumPy API
+		NA -- API
+
+	NA -- Global state
+		NA -- Performance-related options
+		NA -- Debugging-related options
+		NA -- Testing planned future behavior
+
+	NA -- Packaging (numpy.distutils)
+		NA -- Modules in numpy.distutils
+		NA -- Configuration class
+		NA -- Building Installable C libraries
+		NA -- Conversion of .src files
+
+	NA -- NumPy distutils - users guide
+		NA -- SciPy structure
+		NA -- Requirements for SciPy packages
+		NA -- The setup.py file
+		NA -- The __init__.py file
+		NA -- Extra features in NumPy Distutils
+
+	NA -- Status of numpy.distutils and migration advice
+		NA -- Migration advice
+		NA -- Interaction of numpy.distutils with setuptools
+	
+	NA -- NumPy C-API
+		NA -- Python Types and C-Structures
+		NA -- System configuration
+		NA -- Data Type API
+		NA -- Array API
+		NA -- Array Iterator API
+		NA -- UFunc API
+		NA -- Generalized Universal Function API
+		NA -- NumPy core libraries
+		NA -- C API Deprecations
+		NA -- Memory management in NumPy
+	
+	NA -- CPU/SIMD Optimizations
+		NA -- CPU build options
+		NA -- How does the CPU dispatcher work?
+	
+	NA -- NumPy security
+		NA -- Advice for using NumPy on untrusted data
+	
+	NA -- NumPy and SWIG
+		NA -- numpy.i: a SWIG Interface File for NumPy
+		NA -- Testing the numpy.i Typemaps
