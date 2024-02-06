@@ -6,7 +6,7 @@ In Progress -- Documentation
 		Done -- Essential basic functionality
 		Done -- IO tools (text, CSV, HDF5, …)
 		NA -- PyArrow Functionality
-		In Progress -- Indexing and selecting data
+		Done -- Indexing and selecting data
 		In Progress -- MultiIndex / advanced indexing
 		In Progress -- Copy-on-Write (CoW)
 		In Progress -- Merge, join, concatenate and compare
