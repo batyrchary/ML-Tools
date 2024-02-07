@@ -1,0 +1,19 @@
+TensorFlow for
+
+1. TensorFlow Core -- Basic Tensorflow
+
+2. TensorFlow.js -- For Web: to create ML models and deploy existing models with JS
+
+3. TensorFlow Lite -- For Mobile & Edge: to create ML models for embedded devices like Android, iOS, Edge TPU, and Raspberry Pi.
+
+4. TFX -- For Production: end-to-end platform for deploying production ML pipelines
+
+
+
+Pretrained model in TensorFlow Hub:
+ 	https://www.tensorflow.org/hub
+
+State-of-the art research models in the Model Garden
+ 	https://www.tensorflow.org/guide/model_garden
+
+Debugging with Keras
