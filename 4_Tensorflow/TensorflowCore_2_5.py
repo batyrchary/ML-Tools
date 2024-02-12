@@ -2,20 +2,14 @@
 
 #Overfit and underfit 
 #https://www.tensorflow.org/tutorials/keras/overfit_and_underfit
-
-
 #regularization: These place constraints on the quantity and type of information your model can store.
 
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import regularizers
-
-#!pip install git+https://github.com/tensorflow/docs
-
 import tensorflow_docs as tfdocs
 import tensorflow_docs.modeling
 import tensorflow_docs.plots
-
 
 from  IPython import display
 from matplotlib import pyplot as plt
@@ -26,6 +20,12 @@ import pathlib
 import shutil
 import tempfile
 
+#!pip install git+https://github.com/tensorflow/docs
+#pip install IPython
+
+
+
+'''
 logdir = pathlib.Path(tempfile.mkdtemp())/"tensorboard_logs"
 shutil.rmtree(logdir, ignore_errors=True)
 
@@ -268,7 +268,7 @@ regularizer_histories['combined'] = compile_and_fit(combined_model, "regularizer
 
 plotter.plot(regularizer_histories)
 plt.ylim([0.5, 0.7])
-
+'''
 
 '''
 Conclusions
