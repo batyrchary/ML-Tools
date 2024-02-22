@@ -3,28 +3,6 @@
 #videos
 #https://www.tensorflow.org/tutorials/load_data/video
 
-
-'''
-You will learn how to:
-
-Load the data from a zip file.
-
-Read sequences of frames out of the video files.
-
-Visualize the video data.
-
-Wrap the frame-generator tf.data.Dataset.
-
-Setup
-Begin by installing and importing some necessary libraries, including: remotezip to inspect the contents of a ZIP file, tqdm to use a progress bar, OpenCV to process video files, and tensorflow_docs for embedding data in a Jupyter notebook.
-'''
-
-# The way this tutorial uses the `TimeDistributed` layer requires TF>=2.10
-#pip install -U "tensorflow>=2.10.0"
-
-#pip install remotezip tqdm opencv-python
-#pip install -q git+https://github.com/tensorflow/docs
-
 import tqdm
 import random
 import pathlib
@@ -37,27 +15,28 @@ import numpy as np
 import remotezip as rz
 
 import tensorflow as tf
-
-# Some modules to display an animation using imageio.
 import imageio
 from IPython import display
 from urllib import request
 from tensorflow_docs.vis import embed
 
+#pip install -U "tensorflow>=2.10.0"
+#pip install remotezip tqdm opencv-python
+#pip install -q git+https://github.com/tensorflow/docs
+#pip install imageio
+
 
 #Download a subset of the UCF101 dataset
 URL = 'https://storage.googleapis.com/thumos14_files/UCF101_videos.zip'
 
-
 def list_files_from_zip_url(zip_url):
   """ List the files in each class of the dataset given a URL with the zip file.
-
     Args:
       zip_url: A URL from which the files can be extracted from.
-
     Returns:
       List of files in each of the classes.
   """
+
   files = []
   with rz.RemoteZip(zip_url) as zip:
     for zip_info in zip.infolist():
@@ -66,43 +45,20 @@ def list_files_from_zip_url(zip_url):
 
 files = list_files_from_zip_url(URL)
 files = [f for f in files if f.endswith('.avi')]
-files[:10]
+print(files[:10])
 
-
-#Begin with a few videos and a limited number of classes for training. After running the above code block, notice that the class name is included in the filename of each video.
-
-#Define the get_class function that retrieves the class name from a filename. Then, create a function called get_files_per_class which converts the list of all files (files above) into a dictionary listing the files for each class:
-
+#class name is included in the filename of each video.
+#get_class function that retrieves the class name from a filename. 
 def get_class(fname):
-  """ Retrieve the name of the class given a filename.
-
-    Args:
-      fname: Name of the file in the UCF101 dataset.
-
-    Returns:
-      Class that the file belongs to.
-  """
   return fname.split('_')[-3]
 
-
-
 def get_files_per_class(files):
-  """ Retrieve the files that belong to each class.
-
-    Args:
-      files: List of files in the dataset.
-
-    Returns:
-      Dictionary of class names (key) and files (values). 
-  """
   files_for_class = collections.defaultdict(list)
   for fname in files:
     class_name = get_class(fname)
     files_for_class[class_name].append(fname)
   return files_for_class
 
-
-#Once you have the list of files per class, you can choose how many classes you would like to use and how many videos you would like per class in order to create your dataset.  
 
 NUM_CLASSES = 10
 FILES_PER_CLASS = 50
@@ -113,20 +69,8 @@ classes = list(files_for_class.keys())
 print('Num classes:', len(classes))
 print('Num videos for class[0]:', len(files_for_class[classes[0]]))
 
-
-#Create a new function called select_subset_of_classes that selects a subset of the classes present within the dataset and a particular number of files per class:
-
+#Function selects a subset of the classes present within the dataset and a particular number of files per class
 def select_subset_of_classes(files_for_class, classes, files_per_class):
-  """ Create a dictionary with the class name and a subset of the files in that class.
-
-    Args:
-      files_for_class: Dictionary of class names (key) and files (values).
-      classes: List of classes.
-      files_per_class: Number of files per class of interest.
-
-    Returns:
-      Dictionary with class as key and list of specified number of video files in that class.
-  """
   files_subset = dict()
 
   for class_name in classes:
@@ -137,19 +81,15 @@ def select_subset_of_classes(files_for_class, classes, files_per_class):
 
 
 files_subset = select_subset_of_classes(files_for_class, classes[:NUM_CLASSES], FILES_PER_CLASS)
-list(files_subset.keys())
+print(list(files_subset.keys()))
 
 
-#Define helper functions that split the videos into training, validation, and test sets. The videos are downloaded from a URL with the zip file, and placed into their respective subdirectiories.
-
+#Download the contents of the zip file from the zip URL.
+#Args:
+#  zip_url: A URL with a zip file containing data.
+#  to_dir: A directory to download data to.
+#  file_names: Names of files to download.
 def download_from_zip(zip_url, to_dir, file_names):
-  """ Download the contents of the zip file from the zip URL.
-
-    Args:
-      zip_url: A URL with a zip file containing data.
-      to_dir: A directory to download data to.
-      file_names: Names of files to download.
-  """
   with rz.RemoteZip(zip_url) as zip:
     for fn in tqdm.tqdm(file_names):
       class_name = get_class(fn)
@@ -161,19 +101,13 @@ def download_from_zip(zip_url, to_dir, file_names):
       unzipped_file.rename(output_file)
 
 
-#The following function returns the remaining data that hasn't already been placed into a subset of data. It allows you to place that remaining data in the next specified subset of data.
-
+#Returns the list of files belonging to a subset of data as well as the remainder of files that need to be downloaded.
+#Args:
+#  files_for_class: Files belonging to a particular class of data.
+#  count: Number of files to download.
+#Returns:
+#  Files belonging to the subset of data and dictionary of the remainder of files that need to be downloaded.
 def split_class_lists(files_for_class, count):
-  """ Returns the list of files belonging to a subset of data as well as the remainder of
-    files that need to be downloaded.
-
-    Args:
-      files_for_class: Files belonging to a particular class of data.
-      count: Number of files to download.
-
-    Returns:
-      Files belonging to the subset of data and dictionary of the remainder of files that need to be downloaded.
-  """
   split_files = []
   remainder = {}
   for cls in files_for_class:
@@ -182,23 +116,16 @@ def split_class_lists(files_for_class, count):
   return split_files, remainder
 
 
-
-#The following download_ucf_101_subset function allows you to download a subset of the UCF101 dataset and split it into the training, validation, and test sets. You can specify the number of classes that you would like to use. The splits argument allows you to pass in a dictionary in which the key values are the name of subset (example: "train") and the number of videos you would like to have per class.
-
+#Download a subset of the UCF101 dataset and split them into various parts, such as training, validation, and test.
+#Args:
+#  zip_url: A URL with a ZIP file with the data.
+#  num_classes: Number of labels.
+#  splits: Dictionary specifying the training, validation, test, etc. (key) division of data 
+#          (value is number of files per split).
+#  download_dir: Directory to download data to.
+#Return:
+#  Mapping of the directories containing the subsections of data.
 def download_ucf_101_subset(zip_url, num_classes, splits, download_dir):
-  """ Download a subset of the UCF101 dataset and split them into various parts, such as
-    training, validation, and test.
-
-    Args:
-      zip_url: A URL with a ZIP file with the data.
-      num_classes: Number of labels.
-      splits: Dictionary specifying the training, validation, test, etc. (key) division of data 
-              (value is number of files per split).
-      download_dir: Directory to download data to.
-
-    Return:
-      Mapping of the directories containing the subsections of data.
-  """
   files = list_files_from_zip_url(zip_url)
   for f in files:
     path = os.path.normpath(f)
@@ -207,7 +134,6 @@ def download_ucf_101_subset(zip_url, num_classes, splits, download_dir):
       files.remove(f) # Remove that item from the list if it does not have a filename
 
   files_for_class = get_files_per_class(files)
-
   classes = list(files_for_class.keys())[:num_classes]
 
   for cls in classes:
@@ -226,59 +152,41 @@ def download_ucf_101_subset(zip_url, num_classes, splits, download_dir):
 
   return dirs
 
-download_dir = pathlib.Path('./UCF101_subset/')
+download_dir = pathlib.Path('./datasets/UCF101_subset/')
 subset_paths = download_ucf_101_subset(URL,
                                        num_classes = NUM_CLASSES,
                                        splits = {"train": 30, "val": 10, "test": 10},
                                        download_dir = download_dir)
 
-
-#After downloading the data, you should now have a copy of a subset of the UCF101 dataset. Run the following code to print the total number of videos you have amongst all your subsets of data.
-
+#copy of a subset of the UCF101 dataset. 
 video_count_train = len(list(download_dir.glob('train/*/*.avi')))
 video_count_val = len(list(download_dir.glob('val/*/*.avi')))
 video_count_test = len(list(download_dir.glob('test/*/*.avi')))
 video_total = video_count_train + video_count_val + video_count_test
 print(f"Total videos: {video_total}")
 
-#You can also preview the directory of data files now.
 
-#find ./UCF101_subset
-
-
-'''
-Create frames from each video file
-The frames_from_video_file function splits the videos into frames, reads a randomly chosen span of n_frames out of a video file, and returns them as a NumPy array. To reduce memory and computation overhead, choose a small number of frames. In addition, pick the same number of frames from each video, which makes it easier to work on batches of data.
-'''
-
+#The frames_from_video_file function splits the videos into frames, 
+#Pad and resize an image from a video.
+#Args:
+#  frame: Image that needs to resized and padded. 
+#  output_size: Pixel size of the output frame image.
+#Return:
+#  Formatted frame with padding of specified output size.
 def format_frames(frame, output_size):
-  """
-    Pad and resize an image from a video.
-
-    Args:
-      frame: Image that needs to resized and padded. 
-      output_size: Pixel size of the output frame image.
-
-    Return:
-      Formatted frame with padding of specified output size.
-  """
   frame = tf.image.convert_image_dtype(frame, tf.float32)
   frame = tf.image.resize_with_pad(frame, *output_size)
   return frame
 
+
+#Creates frames from each video file present for each category.
+#Args:
+#  video_path: File path to the video.
+#  n_frames: Number of frames to be created per video file.
+#  output_size: Pixel size of the output frame image.
+#Return:
+#  An NumPy array of frames in the shape of (n_frames, height, width, channels).
 def frames_from_video_file(video_path, n_frames, output_size = (224,224), frame_step = 15):
-  """
-    Creates frames from each video file present for each category.
-
-    Args:
-      video_path: File path to the video.
-      n_frames: Number of frames to be created per video file.
-      output_size: Pixel size of the output frame image.
-
-    Return:
-      An NumPy array of frames in the shape of (n_frames, height, width, channels).
-  """
-  # Read each video frame by frame
   result = []
   src = cv2.VideoCapture(str(video_path))  
 
@@ -310,20 +218,17 @@ def frames_from_video_file(video_path, n_frames, output_size = (224,224), frame_
 
   return result
 
-
 #Visualize video data
 #curl -O https://upload.wikimedia.org/wikipedia/commons/8/86/End_of_a_jam.ogv
-
 #video_path = "End_of_a_jam.ogv"
 #sample_video = frames_from_video_file(video_path, n_frames = 10)
 #sample_video.shape
 
 def to_gif(images):
   converted_images = np.clip(images * 255, 0, 255).astype(np.uint8)
-  imageio.mimsave('./animation.gif', converted_images, fps=10)
-  return embed.embed_file('./animation.gif')
-
-to_gif(sample_video)
+  imageio.mimsave('./datasets/animation.gif', converted_images, fps=10)
+  return embed.embed_file('./datasets/animation.gif')
+#to_gif(sample_video)
 
 
 
@@ -331,18 +236,13 @@ to_gif(sample_video)
 ucf_sample_video = frames_from_video_file(next(subset_paths['train'].glob('*/*.avi')), 50)
 to_gif(ucf_sample_video)
 
-
-#Next, define the FrameGenerator class in order to create an iterable object that can feed data into the TensorFlow data pipeline. The generator (__call__) function yields the frame array produced by frames_from_video_file and a one-hot encoded vector of the label associated with the set of frames.
-
+#Returns a set of frames with their associated label. 
+#Args:
+#  path: Video file paths.
+#  n_frames: Number of frames. 
+#  training: Boolean to determine if training dataset is being created.
 class FrameGenerator:
   def __init__(self, path, n_frames, training = False):
-    """ Returns a set of frames with their associated label. 
-
-      Args:
-        path: Video file paths.
-        n_frames: Number of frames. 
-        training: Boolean to determine if training dataset is being created.
-    """
     self.path = path
     self.n_frames = n_frames
     self.training = training
@@ -368,7 +268,8 @@ class FrameGenerator:
       yield video_frames, label
 
 
-#Test out the FrameGenerator object before wrapping it as a TensorFlow Dataset object. Moreover, for the training dataset, ensure you enable training mode so that the data will be shuffled.
+#Test out the FrameGenerator object before wrapping it as a TensorFlow Dataset object. 
+#Moreover, for the training dataset, ensure you enable training mode so that the data will be shuffled.
 fg = FrameGenerator(subset_paths['train'], 10, training=True)
 
 frames, label = next(fg())
@@ -378,22 +279,15 @@ print(f"Label: {label}")
 
 
 # Create the training set
-output_signature = (tf.TensorSpec(shape = (None, None, None, 3), dtype = tf.float32),
-                    tf.TensorSpec(shape = (), dtype = tf.int16))
-train_ds = tf.data.Dataset.from_generator(FrameGenerator(subset_paths['train'], 10, training=True),
-                                          output_signature = output_signature)
-
+output_signature = (tf.TensorSpec(shape = (None, None, None, 3), dtype = tf.float32), tf.TensorSpec(shape = (), dtype = tf.int16))
+train_ds = tf.data.Dataset.from_generator(FrameGenerator(subset_paths['train'], 10, training=True),output_signature = output_signature)
 
 for frames, labels in train_ds.take(10):
   print(labels)
 
 
 # Create the validation set
-val_ds = tf.data.Dataset.from_generator(FrameGenerator(subset_paths['val'], 10),
-                                        output_signature = output_signature)
-
-
-
+val_ds = tf.data.Dataset.from_generator(FrameGenerator(subset_paths['val'], 10), output_signature = output_signature)
 
 # Print the shapes of the data
 train_frames, train_labels = next(iter(train_ds))
@@ -406,20 +300,14 @@ print(f'Shape of validation labels: {val_labels.shape}')
 
 
 #Configure the dataset for performance
-'''
-Use buffered prefetching such that you can yield data from the disk without having I/O become blocking. Two important functions to use while loading data are:
-
-Dataset.cache: keeps the sets of frames in memory after they're loaded off the disk during the first epoch. This function ensures that the dataset does not become a bottleneck while training your model. If your dataset is too large to fit into memory, you can also use this method to create a performant on-disk cache.
-
-Dataset.prefetch: overlaps data preprocessing and model execution while training. Refer to Better performance with the tf.data for details.
 
 
 AUTOTUNE = tf.data.AUTOTUNE
-
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size = AUTOTUNE)
 val_ds = val_ds.cache().shuffle(1000).prefetch(buffer_size = AUTOTUNE)
-To prepare the data to be fed into the model, use batching as shown below. Notice that when working with video data, such as AVI files, the data should be shaped as a five dimensional object. These dimensions are as follows: [batch_size, number_of_frames, height, width, channels]. In comparison, an image would have four dimensions: [batch_size, height, width, channels]. The image below is an illustration of how the shape of video data is represented.
-'''
+#the data should be shaped as a five dimensional object. 
+#These dimensions are as follows: [batch_size, number_of_frames, height, width, channels]. 
+#In comparison, an image would have four dimensions: [batch_size, height, width, channels]. 
 
 train_ds = train_ds.batch(2)
 val_ds = val_ds.batch(2)
@@ -432,8 +320,7 @@ val_frames, val_labels = next(iter(val_ds))
 print(f'Shape of validation set of frames: {val_frames.shape}')
 print(f'Shape of validation labels: {val_labels.shape}')
 
-#Now that you have created a TensorFlow Dataset of video frames with their labels, you can use it with a deep learning model. The following classification model that uses a pre-trained EfficientNet trains to high accuracy in a few minutes:
-
+#Use a pre-trained EfficientNet trains to high accuracy in a few minutes
 net = tf.keras.applications.EfficientNetB0(include_top = False)
 net.trainable = False
 
