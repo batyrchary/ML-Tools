@@ -653,8 +653,6 @@ print()
 
 
 #Passing batches of text lines todecode_csv runs faster, in about 5s:
-
-
 fonts_files = tf.data.Dataset.list_files("fonts/*.csv")
 fonts_lines = fonts_files.interleave(
     lambda fname:tf.data.TextLineDataset(fname).skip(1), 
@@ -663,7 +661,7 @@ fonts_lines = fonts_files.interleave(
 fonts_fast = fonts_lines.map(lambda x: tf.io.decode_csv(x, record_defaults=font_column_types))
 
 
-%%time
+
 for i,batch in enumerate(fonts_fast.take(20)):
   print('.',end='')
 
@@ -672,14 +670,3 @@ print()
 #For another example of increasing CSV performance by using large batches, refer to the Overfit and underfit tutorial.
 
 #This sort of approach may work, but consider other options like Dataset.cache and tf.data.Dataset.snapshot, or re-encoding your data into a more streamlined format.
-
-
-
-
-
-
-
-
-
-
-
