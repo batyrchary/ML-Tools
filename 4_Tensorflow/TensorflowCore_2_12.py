@@ -142,10 +142,6 @@ for name in binary_feature_names:
 #preprocessed.append(numeric_normalized)
 
 
-
-
-
-
 ###########################--Categorical features
 #To use categorical features you'll first need to encode them into either binary vectors or embeddings. 
 
