@@ -1,8 +1,11 @@
 Done -- Install
 
 In Progress -- Learn
+	
 	Done -- Introduction
+	
 	In Progress -- TensorFlow
+		
 		Done -- Overview
 		In Progress -- Tutorials
 			Done -- Beginner
@@ -10,6 +13,9 @@ In Progress -- Learn
 		In Progress -- Guide
 		In Progress -- Migrate to TF2
 		In Progress -- TF1
+	
+
+
 	In Progress -- For JavaScript
 	In Progress -- For Mobile & Edge
 	In Progress -- For Production
