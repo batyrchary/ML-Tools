@@ -1,0 +1,38 @@
+#To install
+#pip install --upgrade keras
+
+#KerasCV and KerasNLP can be installed via pip:
+#pip install --upgrade keras-cv
+#pip install --upgrade keras-nlp
+#pip install --upgrade keras
+
+#Configuring your backend: # "jax", "tensorflow", "torch".
+#export KERAS_BACKEND="tensorflow"
+
+#In Colab, you can do:
+#import os
+#os.environ["KERAS_BACKEND"] = "jax"
+#import keras
+#The backend must be configured before importing Keras, and the backend cannot be changed after the package has been imported.
+
+
+Compatibility matrix
+JAX compatibility
+The following Keras + JAX versions are compatible with each other:
+
+jax==0.4.20 & keras==3.0.0
+TensorFlow compatibility
+The following Keras + TensorFlow versions are compatible with each other:
+
+To use Keras 2:
+
+tensorflow==2.13.0 & keras==2.13.0
+tensorflow==2.14.0 & keras==2.14.0
+tensorflow==2.15.0 & keras==2.15.0
+To use Keras 3:
+
+tensorflow==2.15.0 & keras==3.0.0
+tensorflow==2.16.0 & keras==3.0.0
+
+#import keras
+#print(keras.__version__)

@@ -1,0 +1,42 @@
+##############--TPU
+TPUs are a fast & efficient hardware accelerator for deep learning that is publicly available on Google Cloud. 
+
+All Keras backends (JAX, TensorFlow, PyTorch) are supported on TPU, but we recommend JAX or TensorFlow in this case.
+
+
+When connected to a TPU runtime, just insert this code snippet before model construction:
+
+#import jax
+#distribution = keras.distribution.DataParallel(devices=jax.devices())
+#keras.distribution.set_distribution(distribution)
+
+
+Using TensorFlow:
+When connected to a TPU runtime, use TPUClusterResolver to detect the TPU. Then, create TPUStrategy and construct your model in the strategy scope:
+
+try:
+    tpu = tf.distribute.cluster_resolver.TPUClusterResolver.connect()
+    print("Device:", tpu.master())
+    strategy = tf.distribute.TPUStrategy(tpu)
+except:
+    strategy = tf.distribute.get_strategy()
+print("Number of replicas:", strategy.num_replicas_in_sync)
+
+with strategy.scope():
+    # Create your model here.
+    ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

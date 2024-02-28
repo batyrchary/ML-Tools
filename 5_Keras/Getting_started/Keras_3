@@ -1,0 +1,7 @@
+KerasTuner: comes with Bayesian Optimization, Hyperband, and Random Search algorithms built-in, and is also designed to be easy for researchers to extend in order to experiment with new search algorithms.
+
+KerasNLP: is a natural language processing library that supports users through their entire development cycle. Our workflows are built from modular components that have state-of-the-art preset weights and architectures when used out-of-the-box and are easily customizable when more control is needed.
+
+KerasCV: is a repository of modular building blocks (layers, metrics, losses, data-augmentation) that applied computer vision engineers can leverage to quickly assemble production-grade, state-of-the-art training and inference pipelines for common use cases such as image classification, object detection, image segmentation, image data augmentation, etc.
+
+AutoKeras is an AutoML system based on Keras. It is developed by DATA Lab at Texas A&M University. The goal of AutoKeras is to make machine learning accessible for everyone. It provides high-level end-to-end APIs such as ImageClassifier or TextClassifier to solve machine learning problems in a few lines, as well as flexible building blocks to perform architecture search.
