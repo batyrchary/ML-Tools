@@ -338,7 +338,6 @@ vae = VariationalAutoEncoder(784, 64, 32)
 
 optimizer = keras.optimizers.Adam(learning_rate=1e-3)
 vae.compile(optimizer, loss=keras.losses.MeanSquaredError())
-
 vae.fit(x_train, x_train, epochs=2, batch_size=64)
 
 
